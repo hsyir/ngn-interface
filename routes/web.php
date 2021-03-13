@@ -15,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/import', function () {
     \Hsy\Ngn\Models\Number::truncate();
-    \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportNumbers,\Illuminate\Support\Facades\Storage::path("ngn.xlsx"));'|'
+    \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportNumbers,\Illuminate\Support\Facades\Storage::path("ngn.xlsx"));
+});
+
+
+Route::get("/test",function(){
+    $ngn = new \Hsy\Ngn\Center();
+    $ngn->search("021","9130","2222");
 });
