@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/import', function () {
+    \Hsy\Ngn\Models\Number::truncate();
+    \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ImportNumbers,\Illuminate\Support\Facades\Storage::path("ngn.xlsx"));'|'
 });
