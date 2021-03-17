@@ -23,3 +23,31 @@ Route::get("/test",function(){
     $ngn = new \Hsy\Ngn\Center();
     $ngn->search("021","9130","2222");
 });
+
+
+// api response
+/*
+ *  api response
+ *  success =>  true
+ *              false
+ *
+ *  data =>     number     02191051234
+ *              prenumber  021
+ *              midnumber  9105
+ *              price       2000000
+ *              category   طلایی
+ *              status     =>   'green' -> free
+ *                              'red'-> registered
+ *                              'orange'-> reserved
+ *                              'gray'-> unknown
+ *
+ *
+ *
+ *آزاد (سبز)
+ثبت شده (قرمز)
+رزرو شده (نارنجی)
+نامشخص (خاکستری)
+ */
+
+
+
