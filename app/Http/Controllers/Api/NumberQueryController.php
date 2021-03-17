@@ -13,34 +13,42 @@ class NumberQueryController extends Controller
 
 
         $validator = \Validator::make($request->all(), [
-            "pre_number" => "required|in:021,051",
+            "pre_number" => "required|digits:3",
             "mid_number" => "required|digits:4",
             "number" => "required|digits:4",
         ]);
 
         if ($validator->fails())
-            return response()->json([
-                "success" => false,
-                "code" => "422",
-                "errors" => $validator->errors()
-            ], 422);
+            return $this->error($validator->errors(), 422);
 
 
         try {
-
             $ngnCenter = new Center();
             $result = $ngnCenter->search($request->pre_number, $request->mid_number, $request->number);
 
-
-
         } catch (\Exception $e) {
-            return response()->json([
-                "success" => false,
-                "code" => "422",
-                "errors" => ["pre_number" => "pre number not defined"]
-            ], 422);
+            return $this->error(
+                ["pre_number" => $e->getMessage()],
+                422
+            );
         }
-        dd($result);
+        return response()->json(
+            $result
+        );
 
+    }
+
+    /**
+     * @param $errors
+     * @param $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function error($errors, $code)
+    {
+        return response()->json([
+            "success" => false,
+            "code" => $code,
+            "errors" => $errors
+        ], $code);
     }
 }
