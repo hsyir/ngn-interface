@@ -14,6 +14,26 @@ class ApiDriver implements DriverInterface
     {
         $url = "https://telefonchy.com/api/v1/wizard/recommend";
         $res = Http::get($url, ["number" => $midNumber . $number, "prenumber" => $preNumber]);
-        dd($res->body());
+
+        $data = $res->json()["data"]['trunks'];
+        if(count($data)<1)
+            return null;
+
+        $numberStatus = $data[0];
+
+        $response = new SearchResponse;
+        $response->number = $number;
+        $response->preNumber = $preNumber;
+        $response->midNumber = $midNumber;
+        $response->category = $numberStatus["type"]["text"];
+        $response->price = $numberStatus["price_real"];
+
+        return $response;
+
+
+
+
+
+
     }
 }
