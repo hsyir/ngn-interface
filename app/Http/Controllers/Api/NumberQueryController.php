@@ -41,9 +41,8 @@ class NumberQueryController extends Controller
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), self::RES_ERROR);
         }
-
         return ($result)
-            ? response()->json($result, self::RES_OK)
+            ? $this->resultResponse($result->toArray())
             : $this->error(["No Result"], self::RES_NOT_FIND);
 
     }
@@ -72,5 +71,16 @@ class NumberQueryController extends Controller
             "mid_number" => "required|digits:4",
             "number" => "required",
         ];
+    }
+
+    private function resultResponse($ngnResponse)
+    {
+        return response()->json(
+            [
+                "success" => true,
+                "code" => self::RES_OK,
+                "result" => $ngnResponse
+            ]
+        );
     }
 }
